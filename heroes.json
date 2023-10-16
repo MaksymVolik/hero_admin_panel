@@ -1,0 +1,67 @@
+{
+  "heroes": [
+    {
+      "id": 1,
+      "name": "Первый герой",
+      "description": "Первый герой в рейтинге!",
+      "element": "fire"
+    },
+    {
+      "id": "3aa176d7-432a-479d-ba5e-2694d4033424",
+      "name": "Неизвестный герой",
+      "description": "Скрывающийся в тени",
+      "element": "wind"
+    },
+    {
+      "id": "1926414f-ccf8-4bda-a554-8a6ab39b93b6",
+      "name": "Морской герой",
+      "description": "Как аквамен, но не из DC",
+      "element": "water"
+    },
+    {
+      "id": "633c5aa0-dad1-4d52-89dd-529458ee7631",
+      "name": "Thor",
+      "description": "cvbgfdv dgaefaf efffr egerg rfe",
+      "element": "earth"
+    },
+    {
+      "id": "f7be6e20-448c-402d-98f1-1d714a696f54",
+      "name": "Максим Волік",
+      "description": "hwhgvtgrvcdw",
+      "element": "wind"
+    },
+    {
+      "id": "c143d67c-7b42-44f2-aa74-3a072caaab47",
+      "name": "Maksym",
+      "description": "hthsrgrsgvwty w rtyw",
+      "element": "water"
+    }
+  ],
+  "filters": [
+    {
+      "name": "all",
+      "title": "Все",
+      "className": "btn-outline-dark"
+    },
+    {
+      "name": "fire",
+      "title": "Огонь",
+      "className": "btn-danger"
+    },
+    {
+      "name": "water",
+      "title": "Вода",
+      "className": "btn-primary"
+    },
+    {
+      "name": "wind",
+      "title": "Ветер",
+      "className": "btn-success"
+    },
+    {
+      "name": "earth",
+      "title": "Земля",
+      "className": "btn-secondary"
+    }
+  ]
+}
