@@ -9,8 +9,10 @@ Hero control panel with the ability to add, remove, filter heroes.
 - hooks (useState, useEffect, useCallback);
 - Redux Toolkit and RTK Query state management (two options implemented), 
 - creating your own hook (useHttp);
-- JSON Server (фейковый REST API);
 - working with react libraries (formik, yup, React Transition Group, сlassnames, uuid,)
+
+### REST API:
+- JSON Server
 
 ### Libraries used:
 - formik - Build forms in React
