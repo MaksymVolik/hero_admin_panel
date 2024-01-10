@@ -1,6 +1,7 @@
 # Hero admin panel
 
 **State management using Redux/Redux Toolkit/RTQ Query**
+
 Hero control panel with the ability to add, remove, filter heroes.
 
 ### React:
@@ -8,6 +9,7 @@ Hero control panel with the ability to add, remove, filter heroes.
 - hooks (useState, useEffect, useCallback);
 - Redux Toolkit and RTK Query state management (two options implemented), 
 - creating your own hook (useHttp);
+- JSON Server (фейковый REST API);
 - working with react libraries (formik, yup, React Transition Group, сlassnames, uuid,)
 
 ### Libraries used:
