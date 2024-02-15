@@ -5,21 +5,22 @@
 //     applyMiddleware
 // } from 'redux';
 
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 // import ReduxThunk from 'redux-thunk'
 
-import heroes from '../components/heroesList/heroesSlice';
-import filters from '../components/heroesFilters/fitersSlice';
+// import heroes from '../components/heroesList/heroesSlice';
+import filters from "../components/heroesFilters/fitersSlice";
+import { heroesApi } from "../components/api/heroesApi";
 
 const stringMiddleware = () => (next) => (action) => {
-    if (typeof action === 'string') {
-        return next({
-            type: action
-        })
-    } else {
-        return next(action);
-    }
-}
+  if (typeof action === "string") {
+    return next({
+      type: action,
+    });
+  } else {
+    return next(action);
+  }
+};
 
 // const enhancer = (createStore) => (...args) => {
 //     const store = createStore(...args);
@@ -45,9 +46,13 @@ const stringMiddleware = () => (next) => (action) => {
 // );
 
 const store = configureStore({
-    reducer: { heroes, filters },
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(stringMiddleware),
-    devTools: process.env.NODE_ENV !== 'production',
+  reducer: {
+    [heroesApi.reducerPath]: heroesApi.reducer,
+    filters,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(stringMiddleware, heroesApi.middleware),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export default store;
