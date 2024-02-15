@@ -14,9 +14,8 @@ Hero control panel with the ability to add, remove, filter heroes.
 
 > ### REST API:
 >
-> - Hero API (NodeJS, express, Postgres Database (PostgreSQL))
-
-    [hero_admin_panel_server](https://github.com/MaksymVolik/hero_admin_panel_server)
+> - API (NodeJS, express, Postgres Database (PostgreSQL))
+>   [hero_admin_panel_server](https://github.com/MaksymVolik/hero_admin_panel_server)
 
 > ### Libraries used:
 >
