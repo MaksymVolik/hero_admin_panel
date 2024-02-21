@@ -1,12 +1,16 @@
 // import { v4 as uuidv4 } from 'uuid';
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useSelector, useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 import { useCreateHeroMutation, useGetFiltersQuery } from "../../api/heroesApi";
+import { heroSetActive } from "../../slices/activeSlice";
 
 const HeroesAddForm = () => {
   const { data: filters = [], isLoading, isError } = useGetFiltersQuery();
   const [createHero] = useCreateHeroMutation();
+  const activeHero = useSelector((state) => state.active.activeHero);
+  const dispatch = useDispatch();
 
   const heroAdd = (values) => {
     const hero = {
