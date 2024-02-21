@@ -13,7 +13,6 @@ const HeroesList = () => {
   const { data: heroes = [], isLoading, isError } = useGetHeroesQuery();
 
   const [deleteHero] = useDeleteHeroMutation();
-
   const activeFilter = useSelector((state) => state.filters.activeFilter);
 
   const filteredHeroes = useMemo(() => {
@@ -26,8 +25,13 @@ const HeroesList = () => {
     }
   }, [heroes, activeFilter]);
 
-  const heroesDel = useCallback((id) => {
+  const heroDel = useCallback((id) => {
     deleteHero(id);
+    // eslint-disable-next-line
+  }, []);
+
+  const heroUpd = useCallback((id) => {
+    
     // eslint-disable-next-line
   }, []);
 
@@ -44,7 +48,10 @@ const HeroesList = () => {
 
     return arr.map(({ id, ...props }) => {
       return (
-        <HeroesListItem key={id} {...props} heroesDel={() => heroesDel(id)} />
+        <HeroesListItem 
+            key={id} {...props} 
+            heroUpd={() => heroUpd(id)} 
+            heroDel={() => heroDel(id)} />
       );
     });
   };

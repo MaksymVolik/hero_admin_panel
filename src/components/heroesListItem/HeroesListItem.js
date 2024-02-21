@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
-const HeroesListItem = ({ name, description, element, heroesDel }) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
+
+const HeroesListItem = ({ name, description, element, heroDel, heroUpd }) => {
   let elementClassName;
 
   switch (element) {
@@ -10,7 +13,7 @@ const HeroesListItem = ({ name, description, element, heroesDel }) => {
       elementClassName = "bg-primary bg-gradient";
       break;
     case "wind":
-      elementClassName = "bg-success bg-gradient";
+      elementClassName = "bg-grey bg-success";
       break;
     case "earth":
       elementClassName = "bg-secondary bg-gradient";
@@ -18,6 +21,9 @@ const HeroesListItem = ({ name, description, element, heroesDel }) => {
     default:
       elementClassName = "bg-warning bg-gradient";
   }
+
+  const updateBtn = <FontAwesomeIcon icon={faPen} width={24} />
+  const deleteBtn = <FontAwesomeIcon icon={faXmark} width={24}/>
 
   return (
     <motion.li
@@ -37,13 +43,19 @@ const HeroesListItem = ({ name, description, element, heroesDel }) => {
         <h3 className="card-title">{name}</h3>
         <p className="card-text">{description}</p>
       </div>
-      <span className="position-absolute top-0 start-100 translate-middle badge border rounded-pill bg-light">
+      <span>
         <button
           type="button"
-          onClick={heroesDel}
-          className="btn-close btn-close"
-          aria-label="Close"
-        ></button>
+          className="btn btn-outline-light bg-transparent border-0 p-0"
+          onClick={heroUpd}
+          aria-label="Update"
+        >{updateBtn}</button>
+        <button
+          type="button"
+          className="btn btn-outline-light bg-transparent border-0 p-0"
+          onClick={heroDel}
+          aria-label="Delete"
+        >{deleteBtn}</button>
       </span>
     </motion.li>
   );
