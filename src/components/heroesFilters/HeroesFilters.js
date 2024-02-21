@@ -1,25 +1,17 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
-import { filtersSetActive, fetchFilters, selectAll } from "./fitersSlice";
+import { useGetFiltersQuery } from "../../api/heroesApi";
+import { filtersSetActive } from "../../slices/activeSlice";
 
 const HeroesFilters = () => {
-  const filters = useSelector(selectAll);
-  const activeFilter = useSelector((state) => state.filters.activeFilter);
-  const filtersLoadingStatus = useSelector(
-    (state) => state.filters.filtersLoadingStatus
-  );
+  const { data: filters = [], isLoading, isError } = useGetFiltersQuery();
+  const activeFilter = useSelector((state) => state.active.activeFilter);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchFilters());
-
-    // eslint-disable-next-line
-  }, []);
-
-  if (filtersLoadingStatus === "loading") {
+  if (isLoading) {
     return <h5 className="text-center">Loading...</h5>;
-  } else if (filtersLoadingStatus === "error") {
+  } else if (isError === "error") {
     return <h5 className="text-center">Loading error</h5>;
   }
 
@@ -44,6 +36,7 @@ const HeroesFilters = () => {
       );
     });
   };
+  console.log(filters);
 
   const element = renderFilters(filters);
 

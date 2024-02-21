@@ -1,29 +1,43 @@
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const HeroesListItem = ({ name, description, element, heroDel, heroUpd }) => {
+const HeroesListItem = ({
+  name,
+  description,
+  element,
+  heroDel,
+  heroUpd,
+  update,
+}) => {
   let elementClassName;
 
-  switch (element) {
-    case "fire":
-      elementClassName = "bg-danger bg-gradient";
-      break;
-    case "water":
-      elementClassName = "bg-primary bg-gradient";
-      break;
-    case "wind":
-      elementClassName = "bg-grey bg-success";
-      break;
-    case "earth":
-      elementClassName = "bg-secondary bg-gradient";
-      break;
-    default:
-      elementClassName = "bg-warning bg-gradient";
+  if (update) {
+    elementClassName = "text-dark bg-light bggradient";
+  } else {
+    switch (element) {
+      case "fire":
+        elementClassName = "text-white bg-danger bg-gradient";
+        break;
+      case "water":
+        elementClassName = "text-white bg-primary bg-gradient";
+        break;
+      case "wind":
+        elementClassName = "text-white bg-grey bg-success";
+        break;
+      case "earth":
+        elementClassName = "text-white bg-secondary bg-gradient";
+        break;
+      default:
+        elementClassName = "text-white bg-warning bg-gradient";
+    }
   }
 
-  const updateBtn = <FontAwesomeIcon icon={faPen} width={24} />
-  const deleteBtn = <FontAwesomeIcon icon={faXmark} width={24}/>
+  const updateBtn = <FontAwesomeIcon icon={faPen} width={24} />;
+  const deleteBtn = <FontAwesomeIcon icon={faXmark} width={24} />;
+  const btnClassName = !update
+    ? "btn-outline-light bg-transparent border-0"
+    : null;
 
   return (
     <motion.li
@@ -31,7 +45,7 @@ const HeroesListItem = ({ name, description, element, heroDel, heroUpd }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`card flex-row mb-4 shadow-lg text-white ${elementClassName}`}
+      className={`card flex-row mb-4 shadow-lg ${elementClassName}`}
     >
       <img
         src={require("../../assets/pngegg.png")}
@@ -46,16 +60,22 @@ const HeroesListItem = ({ name, description, element, heroDel, heroUpd }) => {
       <span>
         <button
           type="button"
-          className="btn btn-outline-light bg-transparent border-0 p-0"
+          className={`btn ${btnClassName} p-0`}
           onClick={heroUpd}
           aria-label="Update"
-        >{updateBtn}</button>
+          disabled={update}
+        >
+          {updateBtn}
+        </button>
         <button
           type="button"
-          className="btn btn-outline-light bg-transparent border-0 p-0"
+          className={`btn ${btnClassName} p-0`}
           onClick={heroDel}
           aria-label="Delete"
-        >{deleteBtn}</button>
+          disabled={update}
+        >
+          {deleteBtn}
+        </button>
       </span>
     </motion.li>
   );

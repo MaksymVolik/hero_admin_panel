@@ -9,8 +9,9 @@ import { configureStore } from "@reduxjs/toolkit";
 // import ReduxThunk from 'redux-thunk'
 
 // import heroes from '../components/heroesList/heroesSlice';
-import filters from "../components/heroesFilters/fitersSlice";
-import { heroesApi } from "../components/api/heroesApi";
+// import filters from "../components/heroesFilters/fitersSlice";
+import active from "../slices/activeSlice";
+import { heroesApi } from "../api/heroesApi";
 
 const stringMiddleware = () => (next) => (action) => {
   if (typeof action === "string") {
@@ -48,7 +49,7 @@ const stringMiddleware = () => (next) => (action) => {
 const store = configureStore({
   reducer: {
     [heroesApi.reducerPath]: heroesApi.reducer,
-    filters,
+    active,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(stringMiddleware, heroesApi.middleware),

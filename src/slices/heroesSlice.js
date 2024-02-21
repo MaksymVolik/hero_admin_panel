@@ -4,7 +4,7 @@ import {
   createEntityAdapter,
   createSelector,
 } from "@reduxjs/toolkit";
-import { useHttp } from "../../hooks/http.hook";
+import { useHttp } from "../hooks/http.hook";
 
 // const initialState = {
 //     heroes: [],

@@ -1,9 +1,10 @@
 import { useCallback, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { AnimatePresence } from "framer-motion";
 
-import { useGetHeroesQuery, useDeleteHeroMutation } from "../api/heroesApi";
+import { useGetHeroesQuery, useDeleteHeroMutation } from "../../api/heroesApi";
+import { heroSetActive } from "../../slices/activeSlice";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
@@ -13,7 +14,11 @@ const HeroesList = () => {
   const { data: heroes = [], isLoading, isError } = useGetHeroesQuery();
 
   const [deleteHero] = useDeleteHeroMutation();
-  const activeFilter = useSelector((state) => state.filters.activeFilter);
+  const activeFilter = useSelector((state) => state.active.activeFilter);
+  const activeHero = useSelector((state) => state.active.activeHero);
+  const dispatch = useDispatch();
+
+  console.log(activeHero);
 
   const filteredHeroes = useMemo(() => {
     const filteredHeroes = heroes.slice();
@@ -31,7 +36,7 @@ const HeroesList = () => {
   }, []);
 
   const heroUpd = useCallback((id) => {
-    
+    dispatch(heroSetActive(id));
     // eslint-disable-next-line
   }, []);
 
@@ -48,10 +53,13 @@ const HeroesList = () => {
 
     return arr.map(({ id, ...props }) => {
       return (
-        <HeroesListItem 
-            key={id} {...props} 
-            heroUpd={() => heroUpd(id)} 
-            heroDel={() => heroDel(id)} />
+        <HeroesListItem
+          key={id}
+          {...props}
+          heroUpd={() => heroUpd(id)}
+          heroDel={() => heroDel(id)}
+          update={id === activeHero}
+        />
       );
     });
   };

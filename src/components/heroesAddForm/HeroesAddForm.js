@@ -1,16 +1,11 @@
-import { useSelector } from "react-redux";
 // import { v4 as uuidv4 } from 'uuid';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { useCreateHeroMutation } from "../api/heroesApi";
-import { selectAll } from "../heroesFilters/fitersSlice";
+import { useCreateHeroMutation, useGetFiltersQuery } from "../../api/heroesApi";
 
 const HeroesAddForm = () => {
-  const filters = useSelector(selectAll);
-  const filtersLoadingStatus = useSelector(
-    (state) => state.filters.filtersLoadingStatus
-  );
+  const { data: filters = [], isLoading, isError } = useGetFiltersQuery();
   const [createHero] = useCreateHeroMutation();
 
   const heroAdd = (values) => {
@@ -21,10 +16,10 @@ const HeroesAddForm = () => {
     createHero(hero);
   };
 
-  const renderFilters = (process, elements) => {
-    if (process === "loading") {
+  const renderFilters = (elements) => {
+    if (isLoading) {
       return <option>Loading...</option>;
-    } else if (process === "error") {
+    } else if (isError) {
       return <option>Loading error</option>;
     }
 
@@ -112,7 +107,7 @@ const HeroesAddForm = () => {
             id="element"
             name="element"
           >
-            {renderFilters(filtersLoadingStatus, filters)}
+            {renderFilters(filters)}
           </Field>
           <ErrorMessage className="error" name="element" component="div" />
         </div>

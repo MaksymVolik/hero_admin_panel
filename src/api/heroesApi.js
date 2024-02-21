@@ -10,6 +10,10 @@ export const heroesApi = createApi({
       transformResponse: (response) => response.data,
       providesTags: ["Heroes"],
     }),
+    getFilters: builder.query({
+      query: () => "/filters",
+      transformResponse: (response) => response.data,
+    }),
     createHero: builder.mutation({
       query: (hero) => ({
         url: `/heroes`,
@@ -38,6 +42,7 @@ export const heroesApi = createApi({
 
 export const {
   useGetHeroesQuery,
+  useGetFiltersQuery,
   useCreateHeroMutation,
   useUpdateHeroMutaion,
   useDeleteHeroMutation,
