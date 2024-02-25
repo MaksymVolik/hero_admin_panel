@@ -35,9 +35,7 @@ const HeroesListItem = ({
 
   const updateBtn = <FontAwesomeIcon icon={faPen} width={24} />;
   const deleteBtn = <FontAwesomeIcon icon={faXmark} width={24} />;
-  const btnClassName = !update
-    ? "btn-outline-light bg-transparent border-0"
-    : null;
+  const btnClassName = !update ? "btn-outline-light bg-transparent" : null;
 
   return (
     <motion.li
@@ -60,7 +58,7 @@ const HeroesListItem = ({
       <span>
         <button
           type="button"
-          className={`btn ${btnClassName} p-0`}
+          className={`btn ${btnClassName} p-0 border-0`}
           onClick={heroUpd}
           aria-label="Update"
           disabled={update}
@@ -69,7 +67,7 @@ const HeroesListItem = ({
         </button>
         <button
           type="button"
-          className={`btn ${btnClassName} p-0`}
+          className={`btn ${btnClassName} p-0 border-0`}
           onClick={heroDel}
           aria-label="Delete"
           disabled={update}

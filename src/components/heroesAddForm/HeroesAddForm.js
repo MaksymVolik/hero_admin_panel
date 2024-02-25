@@ -3,14 +3,22 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import * as Yup from "yup";
 
-import { useCreateHeroMutation, useGetFiltersQuery } from "../../api/heroesApi";
-import { heroSetActive } from "../../slices/activeSlice";
+import {
+  useCreateHeroMutation,
+  useGetFiltersQuery,
+  useUpdateHeroMutation,
+} from "../../api/heroesApi";
+import { heroActiveReset } from "../../slices/activeSlice";
 
 const HeroesAddForm = () => {
   const { data: filters = [], isLoading, isError } = useGetFiltersQuery();
-  const [createHero] = useCreateHeroMutation();
   const activeHero = useSelector((state) => state.active.activeHero);
+
+  const [createHero] = useCreateHeroMutation();
+  const [updateHero] = useUpdateHeroMutation();
   const dispatch = useDispatch();
+
+  const isNew = activeHero.id === 0;
 
   const heroAdd = (values) => {
     const hero = {
@@ -18,6 +26,15 @@ const HeroesAddForm = () => {
       ...values,
     };
     createHero(hero);
+  };
+
+  const heroUpd = (values) => {
+    const hero = {
+      id: activeHero.id,
+      ...values,
+    };
+    updateHero(hero);
+    dispatch(heroActiveReset());
   };
 
   const renderFilters = (elements) => {
@@ -51,10 +68,11 @@ const HeroesAddForm = () => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        description: "",
-        element: "",
+        name: activeHero.name,
+        description: activeHero.description,
+        element: activeHero.element,
       }}
+      enableReinitialize={true}
       validationSchema={Yup.object({
         name: Yup.string()
           .min(2, "Minimum length of 2 characters!")
@@ -66,14 +84,14 @@ const HeroesAddForm = () => {
       })}
       // onSubmit={values => console.log(JSON.stringify(values, null, 2))}
       onSubmit={(values, { resetForm }) => {
-        heroAdd(values);
+        isNew ? heroAdd(values) : heroUpd(values);
         resetForm();
       }}
     >
       <Form className="border p-4 shadow-lg rounded">
         <div className="mb-3">
           <label htmlFor="name" className="form-label fs-4">
-            New hero's name
+            {isNew ? "New hero's name" : "Hero's name"}
           </label>
           <Field
             id="name"
@@ -117,8 +135,17 @@ const HeroesAddForm = () => {
         </div>
 
         <button type="submit" className="btn btn-primary">
-          Create
+          {isNew ? "Create" : "Update"}
         </button>
+        {!isNew ? (
+          <button
+            type="reset"
+            onClick={() => dispatch(heroActiveReset())}
+            className="btn btn-light ms-3"
+          >
+            Cancel
+          </button>
+        ) : null}
       </Form>
     </Formik>
   );

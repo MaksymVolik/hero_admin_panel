@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { AnimatePresence } from "framer-motion";
@@ -18,7 +18,15 @@ const HeroesList = () => {
   const activeHero = useSelector((state) => state.active.activeHero);
   const dispatch = useDispatch();
 
-  console.log(activeHero);
+  useEffect(() => {
+    console.log("heros");
+  }, [heroes]);
+  useEffect(() => {
+    console.log("activeFilter");
+  }, [activeFilter]);
+  useEffect(() => {
+    console.log("activeHero");
+  }, [activeHero]);
 
   const filteredHeroes = useMemo(() => {
     const filteredHeroes = heroes.slice();
@@ -35,8 +43,8 @@ const HeroesList = () => {
     // eslint-disable-next-line
   }, []);
 
-  const heroUpd = useCallback((id) => {
-    dispatch(heroSetActive(id));
+  const heroUpd = useCallback((hero) => {
+    dispatch(heroSetActive(hero));
     // eslint-disable-next-line
   }, []);
 
@@ -50,15 +58,16 @@ const HeroesList = () => {
     if (arr.length === 0) {
       return <h5 className="text-center mt-5">No heroes yet</h5>;
     }
+    console.log(activeHero);
 
-    return arr.map(({ id, ...props }) => {
+    return arr.map((hero) => {
       return (
         <HeroesListItem
-          key={id}
-          {...props}
-          heroUpd={() => heroUpd(id)}
-          heroDel={() => heroDel(id)}
-          update={id === activeHero}
+          key={hero.id}
+          {...hero}
+          heroUpd={() => heroUpd(hero)}
+          heroDel={() => heroDel(hero.id)}
+          update={activeHero.id === hero.id}
         />
       );
     });

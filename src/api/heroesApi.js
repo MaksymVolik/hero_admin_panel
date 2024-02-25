@@ -23,12 +23,12 @@ export const heroesApi = createApi({
       invalidatesTags: ["Heroes"],
     }),
     updateHero: builder.mutation({
-        query: ({id, ...hero}) => ({
-            url: `/heroes/${id}`,
-            method: 'PUT',
-            body: hero,
-        }),
-        invalidatesTags: ['Heroes'],
+      query: ({ id, ...hero }) => ({
+        url: `/heroes/${id}`,
+        method: "PUT",
+        body: hero,
+      }),
+      invalidatesTags: ["Heroes"],
     }),
     deleteHero: builder.mutation({
       query: (id) => ({
@@ -44,6 +44,6 @@ export const {
   useGetHeroesQuery,
   useGetFiltersQuery,
   useCreateHeroMutation,
-  useUpdateHeroMutaion,
+  useUpdateHeroMutation,
   useDeleteHeroMutation,
 } = heroesApi;
