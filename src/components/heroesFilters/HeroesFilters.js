@@ -36,7 +36,6 @@ const HeroesFilters = () => {
       );
     });
   };
-  console.log(filters);
 
   const element = renderFilters(filters);
 

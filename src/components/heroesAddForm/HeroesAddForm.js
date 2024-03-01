@@ -28,13 +28,12 @@ const HeroesAddForm = () => {
     createHero(hero);
   };
 
-  const heroUpd = (values) => {
+  const heroUpd = async (values) => {
     const hero = {
       id: activeHero.id,
       ...values,
     };
-    updateHero(hero);
-    dispatch(heroActiveReset());
+    await updateHero(hero).finally(() => dispatch(heroActiveReset()));
   };
 
   const renderFilters = (elements) => {

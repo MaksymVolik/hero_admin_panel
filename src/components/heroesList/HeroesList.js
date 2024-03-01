@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { AnimatePresence } from "framer-motion";
@@ -17,16 +17,6 @@ const HeroesList = () => {
   const activeFilter = useSelector((state) => state.active.activeFilter);
   const activeHero = useSelector((state) => state.active.activeHero);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("heros");
-  }, [heroes]);
-  useEffect(() => {
-    console.log("activeFilter");
-  }, [activeFilter]);
-  useEffect(() => {
-    console.log("activeHero");
-  }, [activeHero]);
 
   const filteredHeroes = useMemo(() => {
     const filteredHeroes = heroes.slice();
@@ -58,7 +48,6 @@ const HeroesList = () => {
     if (arr.length === 0) {
       return <h5 className="text-center mt-5">No heroes yet</h5>;
     }
-    console.log(activeHero);
 
     return arr.map((hero) => {
       return (
@@ -75,9 +64,6 @@ const HeroesList = () => {
 
   const elements = renderHeroesList(filteredHeroes);
 
-  // const elements = renderHeroesList(activeFilter === 'all'
-  //     ? heroes
-  //     : heroes.filter(item => item.element === activeFilter));
   return (
     <ul>
       <AnimatePresence>{elements}</AnimatePresence>
