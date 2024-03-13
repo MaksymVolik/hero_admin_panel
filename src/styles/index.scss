@@ -1,13 +1,48 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 ul {
-    padding: 0;
+  padding: 0;
+}
+
+.app {
+  height: 100vh;
+  overflow-y: scroll;
+  background: url("../assets/hero_bg.jpg") center / cover no-repeat;
+}
+
+.content {
+  display: grid;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-top: 50px;
+
+  &__interactive {
+    padding-left: 40px;
+  }
+}
+
+.homepage {
+  grid-template-columns: 560px 440px;
+}
+
+.login {
+  max-width: 540px;
+}
+
+.error {
+  color: #e53e3e;
+  margin-top: 8px;
+  font-size: 0.8rem;
+}
+
+.active-link {
+  color: #2d874b;
 }

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
-import { useGetFiltersQuery } from "../../api/heroesApi";
+import { useGetFiltersQuery } from "./filterApiSlice";
 import { filtersSetActive } from "../../slices/activeSlice";
 
 const HeroesFilters = () => {

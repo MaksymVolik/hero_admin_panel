@@ -1,22 +1,33 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { AnimatePresence } from "framer-motion";
 
-import { useGetHeroesQuery, useDeleteHeroMutation } from "../../api/heroesApi";
-import { heroSetActive } from "../../slices/activeSlice";
+import { useGetHeroesQuery, useDeleteHeroMutation } from "./heroApiSlice";
+import { heroActiveReset, heroSetActive } from "../../slices/activeSlice";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
 
-import "./heroesList.scss";
-
 const HeroesList = () => {
-  const { data: heroes = [], isLoading, isError } = useGetHeroesQuery();
+  const {
+    data: heroes = [],
+    isLoading,
+    isError,
+    isFetching,
+    refetch,
+  } = useGetHeroesQuery();
 
   const [deleteHero] = useDeleteHeroMutation();
   const activeFilter = useSelector((state) => state.active.activeFilter);
   const activeHero = useSelector((state) => state.active.activeHero);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isFetching) {
+      dispatch(heroActiveReset());
+    }
+    // eslint-disable-next-line
+  }, [isFetching]);
 
   const filteredHeroes = useMemo(() => {
     const filteredHeroes = heroes.slice();
@@ -65,9 +76,14 @@ const HeroesList = () => {
   const elements = renderHeroesList(filteredHeroes);
 
   return (
-    <ul>
-      <AnimatePresence>{elements}</AnimatePresence>
-    </ul>
+    <>
+      <ul>
+        <AnimatePresence>{elements}</AnimatePresence>
+      </ul>
+      <button className="btn" onClick={() => refetch()}>
+        Reload Heroes
+      </button>
+    </>
   );
 };
 

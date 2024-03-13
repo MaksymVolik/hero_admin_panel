@@ -5,9 +5,9 @@ import * as Yup from "yup";
 
 import {
   useCreateHeroMutation,
-  useGetFiltersQuery,
   useUpdateHeroMutation,
-} from "../../api/heroesApi";
+} from "../heroesList/heroApiSlice";
+import { useGetFiltersQuery } from "../heroesFilters/filterApiSlice";
 import { heroActiveReset } from "../../slices/activeSlice";
 
 const HeroesAddForm = () => {
@@ -33,7 +33,7 @@ const HeroesAddForm = () => {
       id: activeHero.id,
       ...values,
     };
-    await updateHero(hero).finally(() => dispatch(heroActiveReset()));
+    updateHero(hero); //.finally(() => dispatch(heroActiveReset()));
   };
 
   const renderFilters = (elements) => {
@@ -81,7 +81,7 @@ const HeroesAddForm = () => {
           .required("Required field"),
         element: Yup.string().required("You need to choose an element!"),
       })}
-      // onSubmit={values => console.log(JSON.stringify(values, null, 2))}
+      // onSubmit={values => apiSlice(JSON.stringify(values, null, 2))}
       onSubmit={(values, { resetForm }) => {
         isNew ? heroAdd(values) : heroUpd(values);
         resetForm();
