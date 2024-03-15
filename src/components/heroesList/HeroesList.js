@@ -17,7 +17,7 @@ const HeroesList = () => {
     refetch,
   } = useGetHeroesQuery();
 
-  const [deleteHero] = useDeleteHeroMutation();
+  const [deleteHero, { isLoading: isLoadingDel }] = useDeleteHeroMutation();
   const activeFilter = useSelector((state) => state.active.activeFilter);
   const activeHero = useSelector((state) => state.active.activeHero);
   const dispatch = useDispatch();
@@ -80,6 +80,7 @@ const HeroesList = () => {
       <ul>
         <AnimatePresence>{elements}</AnimatePresence>
       </ul>
+      {isFetching || isLoadingDel ? <Spinner /> : null}
       <button className="btn" onClick={() => refetch()}>
         Reload Heroes
       </button>

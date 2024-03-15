@@ -1,5 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
-import { logOut, setCredentials } from "./authSlice";
+import { logOut } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -29,23 +29,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
         } catch (error) {}
       },
     }),
-    // refresh: builder.query({
-    //   query() {
-    //     return {
-    //       url: "refresh",
-    //     };
-    //   },
-    //   async onQueryStarted(_args, { dispatch, queryFulfilled }) {
-    //     try {
-    //       const { data } = await queryFulfilled;
-    //       console.log("onQueryStarted: " + JSON.stringify(data));
-
-    //       dispatch(setCredentials(data));
-    //     } catch (error) {}
-    //   },
-    // }),
+    resendEmail: builder.mutation({
+      query: () => ({
+        url: "/resendemail",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
-export const { useRegistrationMutation, useLoginMutation, useLogoutMutation } =
-  authApiSlice;
+export const {
+  useRegistrationMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useResendEmailMutation,
+} = authApiSlice;

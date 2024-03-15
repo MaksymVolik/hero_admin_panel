@@ -4,10 +4,12 @@ import HeroesFilters from "../heroesFilters/HeroesFilters";
 
 const HomePage = () => {
   return (
-    <main className="app">
-      <div className="content homepage">
-        <HeroesList />
-        <div className="content__interactive">
+    <main className="container mt-5 position-relative">
+      <div className="row gx-5 justify-content-center">
+        <div className="col-6">
+          <HeroesList />
+        </div>
+        <div className="col-4">
           <HeroesAddForm />
           <HeroesFilters />
         </div>

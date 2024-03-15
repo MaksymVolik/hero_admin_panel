@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { setCredentials } from "../../auth/authSlice";
 import { useRegistrationMutation } from "../../auth/authApiSlice";
 
@@ -42,28 +42,35 @@ const SignUp = () => {
   return isLoading ? (
     <Spinner />
   ) : (
-    <LoginForm
-      title="register"
-      handleClick={handleRegister}
-      initialValues={{
-        username: "",
-        email: "",
-        password: "",
-      }}
-      validationSchema={Yup.object({
-        username: Yup.string()
-          .min(3, "Minimum length of 3 characters!")
-          .max(50, "Maximum length of 3 characters!")
-          .required("Required field!"),
-        email: Yup.string()
-          .email("This is not a valid email address")
-          .required("Required field"),
-        password: Yup.string()
-          .min(3, "Minimum length of 3 characters!")
-          .max(32, "Maximum length of 3 characters!")
-          .required("Required field!"),
-      })}
-    />
+    <>
+      <h1 className="text-center mb-4">Create your account</h1>
+
+      <LoginForm
+        title="register"
+        handleClick={handleRegister}
+        initialValues={{
+          username: "",
+          email: "",
+          password: "",
+        }}
+        validationSchema={Yup.object({
+          username: Yup.string()
+            .min(3, "Minimum length of 3 characters!")
+            .max(50, "Maximum length of 3 characters!")
+            .required("Required field!"),
+          email: Yup.string()
+            .email("This is not a valid email address")
+            .required("Required field"),
+          password: Yup.string()
+            .min(3, "Minimum length of 3 characters!")
+            .max(32, "Maximum length of 3 characters!")
+            .required("Required field!"),
+        })}
+      />
+      <p className="text-center mt-3">
+        Already have an account? <Link to="/login">Sign in</Link>
+      </p>
+    </>
   );
 };
 

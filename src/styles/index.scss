@@ -18,31 +18,6 @@ ul {
   background: url("../assets/hero_bg.jpg") center / cover no-repeat;
 }
 
-.content {
-  display: grid;
-  max-width: 1040px;
-  margin: 0 auto;
-  padding-top: 50px;
-
-  &__interactive {
-    padding-left: 40px;
-  }
-}
-
-.homepage {
-  grid-template-columns: 560px 440px;
-}
-
-.login {
-  max-width: 540px;
-}
-
-.error {
-  color: #e53e3e;
-  margin-top: 8px;
-  font-size: 0.8rem;
-}
-
-.active-link {
-  color: #2d874b;
+.pointer:hover {
+  cursor: pointer;
 }

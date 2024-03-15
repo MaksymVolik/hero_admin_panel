@@ -1,10 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "../Pages/Layout";
-import LoginPage from "../Pages/LoginPage";
-import RegisterPage from "../Pages/RegisterPage";
+import LoginAndSingupPage from "../Pages/LoginAndSingupPage";
+import LogIn from "../users/LogIn";
+import SignUp from "../users/SingUp";
 import HomePage from "../Pages/HomePage";
 import RequireAuth from "../hoc/RequireAuth";
 import ProfilePage from "../Pages/ProfilePage";
+import UnActivatedPage from "../Pages/UnActivatedPage";
 
 function App() {
   return (
@@ -26,8 +28,23 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
+        <Route path="activated" element={<UnActivatedPage />} />
+        <Route
+          path="login"
+          element={
+            <LoginAndSingupPage>
+              <LogIn />
+            </LoginAndSingupPage>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <LoginAndSingupPage>
+              <SignUp />
+            </LoginAndSingupPage>
+          }
+        />
       </Route>
     </Routes>
   );

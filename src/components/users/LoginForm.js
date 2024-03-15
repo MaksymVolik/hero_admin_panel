@@ -27,7 +27,11 @@ const LoginForm = ({ title, initialValues, validationSchema, handleClick }) => {
             <label htmlFor="username" className="form-label">
               Name
             </label>
-            <ErrorMessage className="error" name="username" component="div" />
+            <ErrorMessage
+              className="text-danger mt-2"
+              name="username"
+              component="div"
+            />
           </div>
         )}
 
@@ -43,7 +47,11 @@ const LoginForm = ({ title, initialValues, validationSchema, handleClick }) => {
           <label htmlFor="email" className="form-label">
             Email address
           </label>
-          <ErrorMessage className="error" name="email" component="div" />
+          <ErrorMessage
+            className="text-danger mt-2"
+            name="email"
+            component="div"
+          />
         </div>
 
         <div className="form-floating mb-3">
@@ -57,10 +65,14 @@ const LoginForm = ({ title, initialValues, validationSchema, handleClick }) => {
           <label htmlFor="password" className="form-label">
             Password
           </label>
-          <ErrorMessage className="error" name="password" component="div" />
+          <ErrorMessage
+            className="text-danger mt-2"
+            name="password"
+            component="div"
+          />
         </div>
         <div className="d-grid mt-4">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary btn-lg">
             {isLogin ? "Log in" : "Create account"}
           </button>
         </div>

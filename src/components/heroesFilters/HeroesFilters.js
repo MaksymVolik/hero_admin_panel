@@ -21,7 +21,7 @@ const HeroesFilters = () => {
     }
 
     return filters.map(({ name, title, classname }) => {
-      const btnClass = classNames(`btn ${classname}`, {
+      const btnClass = classNames(`btn col-auto col-xxl-1 ${classname}`, {
         active: name === activeFilter,
       });
       return (
@@ -43,7 +43,7 @@ const HeroesFilters = () => {
     <div className="card shadow-lg mt-4">
       <div className="card-body">
         <p className="card-text">Filter heroes by element</p>
-        <div className="btn-group">{element}</div>
+        <div className="btn-group d-xxl-flex d-grid">{element}</div>
       </div>
     </div>
   );
