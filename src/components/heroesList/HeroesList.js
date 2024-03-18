@@ -7,20 +7,36 @@ import { useGetHeroesQuery, useDeleteHeroMutation } from "./heroApiSlice";
 import { heroActiveReset, heroSetActive } from "../../slices/activeSlice";
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from "../spinner/Spinner";
+import { errMsg } from "../../hooks/errMsg";
 
 const HeroesList = () => {
   const {
     data: heroes = [],
     isLoading,
     isError,
+    error,
     isFetching,
-    refetch,
-  } = useGetHeroesQuery();
-
-  const [deleteHero, { isLoading: isLoadingDel }] = useDeleteHeroMutation();
+  } = useGetHeroesQuery(null, {
+    skip: false,
+    refetchOnMountOrArgChange: true,
+  });
+  const [
+    deleteHero,
+    { isLoading: isLoadingDel, isError: isErrorDel, error: errDel },
+  ] = useDeleteHeroMutation();
   const activeFilter = useSelector((state) => state.active.activeFilter);
   const activeHero = useSelector((state) => state.active.activeHero);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isError) errMsg(error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, isFetching]);
+
+  useEffect(() => {
+    if (isErrorDel) errMsg(errDel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingDel]);
 
   useEffect(() => {
     if (!isFetching) {
@@ -81,9 +97,6 @@ const HeroesList = () => {
         <AnimatePresence>{elements}</AnimatePresence>
       </ul>
       {isFetching || isLoadingDel ? <Spinner /> : null}
-      <button className="btn" onClick={() => refetch()}>
-        Reload Heroes
-      </button>
     </>
   );
 };

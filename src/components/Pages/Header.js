@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../../auth/authApiSlice";
 import { SpinnerBtn } from "../spinner/Spinner";
+import { apiSlice } from "../../api/apiSlice";
+import { errMsg } from "../../hooks/errMsg";
 
 const setActive = ({ isActive }) => (isActive ? "active" : "");
 
@@ -11,9 +13,11 @@ const Header = () => {
   const [logout, { isLoading, isSuccess, isError, error }] =
     useLogoutMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onLogout = async () => {
     await logout();
+    dispatch(apiSlice.util.resetApiState());
   };
 
   useEffect(() => {
@@ -21,13 +25,7 @@ const Header = () => {
       navigate("login", { replace: true });
     }
 
-    if (isError) {
-      if (Array.isArray(error.data.error)) {
-        error.data.error.forEach((el) => console.error(el.message));
-      } else {
-        console.error(error.data.message);
-      }
-    }
+    if (isError) errMsg(error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 

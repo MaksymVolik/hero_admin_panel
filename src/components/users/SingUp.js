@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import * as Yup from "yup";
 import { setCredentials } from "../../auth/authSlice";
 import { useRegistrationMutation } from "../../auth/authApiSlice";
 
 import LoginForm from "./LoginForm";
 import Spinner from "../spinner/Spinner";
-import * as Yup from "yup";
+import { errMsg } from "../../hooks/errMsg";
 
 const SignUp = () => {
-  const [errMsg, setErrMsg] = useState("");
   const dispatch = useDispatch();
   const [registration, { isLoading }] = useRegistrationMutation();
   const navigate = useNavigate();
@@ -21,21 +20,10 @@ const SignUp = () => {
         email,
         password,
       }).unwrap();
-      console.log(userData);
-
       dispatch(setCredentials({ ...userData }));
       navigate("/");
     } catch (err) {
-      if (!err?.originalStatus) {
-        // isLoading: true until timeout occurs
-        setErrMsg("No Server Response");
-      } else if (err.originalStatus === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.originalStatus === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
-      }
+      errMsg(err);
     }
   };
 

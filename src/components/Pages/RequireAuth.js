@@ -1,19 +1,14 @@
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { userApiSlice } from "../../auth/userApiSlice";
+import { useGetMeQuery } from "../../auth/userApiSlice";
 import Spinner from "../spinner/Spinner";
-import { useEffect } from "react";
 
-const RequireAuth = ({ children }) => {
+const RequireAuth = () => {
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
   const location = useLocation();
 
-  const {
-    data: user,
-    isLoading,
-    isFetching,
-    refetch,
-  } = userApiSlice.endpoints.getMe.useQuery(null, {
+  const { isLoading, isFetching } = useGetMeQuery(null, {
     skip: false,
     refetchOnMountOrArgChange: true,
   });
@@ -22,26 +17,14 @@ const RequireAuth = ({ children }) => {
   //   selectFromResult: ({ data }) => data,
   // });
 
-  console.log(JSON.stringify(user));
-
-  useEffect(() => {
-    if (token && !user) {
-      refetch();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const loading = isLoading || isFetching;
+  const loading = isLoading || isFetching || (token && !user);
 
   if (loading) {
     return <Spinner />;
   }
 
-  // console.log("user.isActivated: " + user.isActivated);
-  // const isActivated = user.isActivated;
-
   return (token || user) && user?.isActivated ? (
-    children
+    <Outlet />
   ) : token && user ? (
     <Navigate to="/activated" state={{ from: location }} replace />
   ) : (

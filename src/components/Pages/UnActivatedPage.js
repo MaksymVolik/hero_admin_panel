@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useResendEmailMutation } from "../../auth/authApiSlice";
 import { useGetMeQuery } from "../../auth/userApiSlice";
 import Spinner from "../spinner/Spinner";
+import { errMsg } from "../../hooks/errMsg";
 
 const UnActivatedPage = () => {
   const [resendEmail, { isLoading, isSuccess, isError, error }] =
@@ -28,17 +29,7 @@ const UnActivatedPage = () => {
 
     if (isError) {
       setSend("error");
-      if (Array.isArray(error.data.error)) {
-        error.data.error.forEach((el) =>
-          console.error(el.message, {
-            position: "top-right",
-          })
-        );
-      } else {
-        console.error(error.data.message, {
-          position: "top-right",
-        });
-      }
+      errMsg(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);

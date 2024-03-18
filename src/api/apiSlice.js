@@ -21,16 +21,16 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
 
   let result = await baseQuery(args, api, extraOptions);
-  console.log("result:" + JSON.stringify(result));
+  // console.log("result:" + JSON.stringify(result));
 
   if (result.error && result.error.status === 401) {
-    console.log("sending refresh token");
+    // console.log("sending refresh token");
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
         // send refresh token to get new access token
         const refreshResult = await baseQuery("/refresh", api, extraOptions);
-        console.log(refreshResult);
+        // console.log(refreshResult);
         if (refreshResult?.data) {
           // const user = api.getState().auth.user;
           // store the new token

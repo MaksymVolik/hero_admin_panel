@@ -6,7 +6,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
     getMe: builder.query({
       query() {
         return {
-          url: "me",
+          url: "/me",
         };
       },
       transformResponse: (result) => result.data,

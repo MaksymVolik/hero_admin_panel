@@ -1,4 +1,4 @@
-// import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import * as Yup from "yup";
@@ -10,14 +10,40 @@ import {
 import { useGetFiltersQuery } from "../heroesFilters/filterApiSlice";
 import { heroActiveReset } from "../../slices/activeSlice";
 import Spinner from "../spinner/Spinner";
+import { errMsg } from "../../hooks/errMsg";
 
 const HeroesAddForm = () => {
-  const { data: filters = [], isLoading, isError } = useGetFiltersQuery();
+  const {
+    data: filters = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetFiltersQuery();
   const activeHero = useSelector((state) => state.active.activeHero);
-
-  const [createHero, { isLoading: isLoadingCreate }] = useCreateHeroMutation();
-  const [updateHero, { isLoading: isLoadingUpd }] = useUpdateHeroMutation();
+  const [
+    createHero,
+    { isLoading: isLoadingCreate, isError: isErrorCreate, errCreate },
+  ] = useCreateHeroMutation();
+  const [
+    updateHero,
+    { isLoading: isLoadingUpd, isError: isErrorUpd, error: errUpd },
+  ] = useUpdateHeroMutation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isError) errMsg(error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isErrorCreate) errMsg(errCreate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingCreate]);
+
+  useEffect(() => {
+    if (isErrorUpd) errMsg(errUpd);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoadingUpd]);
 
   const isNew = activeHero.id === 0;
 
